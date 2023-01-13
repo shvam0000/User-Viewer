@@ -1,8 +1,26 @@
+import { useState, useEffect } from 'react';
 import { useTable } from 'react-table';
 import { ArrowIcon } from '../../utils/icons';
-import { data, columns } from '../../utils/data/table-data';
+import { columns } from '../../utils/data/table-data';
+import axios from 'axios';
 
 const TableData = () => {
+  const [data, setData] = useState<[]>([]);
+
+  const url = 'http://localhost:3001/users';
+  useEffect(() => {
+    axios(url, {
+      method: 'GET',
+    })
+      .then((res) => {
+        console.log(res.data);
+        setData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   const {
     getTableProps,
     getTableBodyProps,

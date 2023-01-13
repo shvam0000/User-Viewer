@@ -1,34 +1,3 @@
-export const data = [
-  {
-    name: 'A',
-    age: 20,
-    status: 'active',
-    role: 'admin',
-    lastLogin: '10 Jan, 2023',
-  },
-  {
-    name: 'A',
-    age: 20,
-    status: 'active',
-    role: 'admin',
-    lastLogin: '10 Jan, 2023',
-  },
-  {
-    name: 'A',
-    age: 20,
-    status: 'active',
-    role: 'admin',
-    lastLogin: '10 Jan, 2023',
-  },
-  {
-    name: 'A',
-    age: 20,
-    status: 'active',
-    role: 'admin',
-    lastLogin: '10 Jan, 2023',
-  },
-];
-
 export const columns = [
   {
     Header: 'Name ',
