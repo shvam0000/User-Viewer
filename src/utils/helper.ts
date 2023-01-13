@@ -15,7 +15,6 @@ const monthNames = [
 
 const today = new Date();
 const year = today.getFullYear();
-const month = today.getMonth() + 1;
 const monthName = monthNames[today.getMonth()];
 const date = today.getDate();
 const hour = today.getHours();

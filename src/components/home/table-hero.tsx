@@ -33,10 +33,8 @@ const TableHero = () => {
           </Button>
         </div>
         <div className="px-2">
-          <Button type="primary">
-            <div
-              className="flex items-center justify-center"
-              onClick={() => setShowModal(true)}>
+          <Button type="primary" handleClick={() => setShowModal(true)}>
+            <div className="flex items-center justify-center">
               <span className="px-1">
                 <PlusIcon />
               </span>

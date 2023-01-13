@@ -6,6 +6,7 @@ export type BadgeProps = {
 export type ButtonProps = {
   type: 'primary' | 'secondary';
   children: JSX.Element;
+  handleClick?: () => void;
 };
 
 export type LayoutProps = {
