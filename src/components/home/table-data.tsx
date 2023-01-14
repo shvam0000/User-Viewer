@@ -3,10 +3,17 @@ import { useState, useEffect } from 'react';
 import Modal from 'react-lean-modal';
 import axios from 'axios';
 import { Badge, Button } from '../shared';
-import { DeleteIcon, EditIcon } from '../../utils/icons';
+import {
+  DeleteIcon,
+  EditIcon,
+  LeftArrowIcon,
+  RightArrowIcon,
+} from '../../utils/icons';
 import { lastLogin } from '../../utils/helper';
+import { usePagination } from '../../utils/hooks/';
 
 const TableData = () => {
+  const perPage = 5;
   const [data, setData] = useState<[]>([]);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [userId, setUserId] = useState<string>('2');
@@ -180,6 +187,16 @@ const TableData = () => {
     );
   };
 
+  const _data = usePagination(data, perPage);
+
+  const handleNextPage = () => {
+    _data.next();
+  };
+
+  const handlePrevPage = () => {
+    _data.prev();
+  };
+
   return (
     <div className="bg-white p-4">
       <table>
@@ -193,7 +210,7 @@ const TableData = () => {
           <th>Actions</th>
         </tr>
 
-        {data.map((items) => {
+        {_data.currentData().map((items) => {
           return (
             <tr className="text-center">
               <td className="px-16" key={items._id}>
@@ -227,6 +244,31 @@ const TableData = () => {
           );
         })}
       </table>
+      <hr />
+      <div className="my-5">
+        <div className="flex justify-between items-center px-24">
+          <figure>
+            <Button type="secondary" handleClick={handlePrevPage}>
+              <div className="flex justify-center items-center">
+                <span className="px-2 text-xl">
+                  <LeftArrowIcon />
+                </span>
+                <span className="text-xl px-2">Previous</span>
+              </div>
+            </Button>
+          </figure>
+          <figure>
+            <Button type="secondary" handleClick={handleNextPage}>
+              <div className="flex justify-center items-center">
+                <span className="text-xl px-2">Next</span>
+                <span className="px-2 text-xl">
+                  <RightArrowIcon />
+                </span>
+              </div>
+            </Button>
+          </figure>
+        </div>
+      </div>
       <Modal
         enterAnimation="fade"
         exitAnimation="fade"
