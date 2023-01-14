@@ -26,7 +26,6 @@ const TableData = () => {
       method: 'GET',
     })
       .then((res) => {
-        console.log(res.data);
         setData(res.data);
       })
       .catch((err) => {
@@ -39,7 +38,6 @@ const TableData = () => {
       method: 'GET',
     })
       .then((res) => {
-        console.log(res.data);
         setUserData(res.data);
       })
       .catch((err) => {
@@ -52,7 +50,6 @@ const TableData = () => {
       method: 'DELETE',
     })
       .then((res) => {
-        console.log(res);
         toast.success('User deleted successfully');
       })
       .catch((err) => {
@@ -73,7 +70,6 @@ const TableData = () => {
       const email = e.target.email.value;
       const status = e.target.status.value;
       const role = e.target.role.value;
-      console.log('heheehe', email, name);
 
       axios(`http://localhost:3001/users/${userId}`, {
         method: 'PATCH',
@@ -85,7 +81,6 @@ const TableData = () => {
         },
       })
         .then((res) => {
-          console.log(res);
           toast.success('User updated successfully');
         })
         .catch((err) => {
@@ -201,47 +196,48 @@ const TableData = () => {
   return (
     <div className="bg-white p-4">
       <table>
-        <tr className="text-2xl">
-          <th>Name</th>
-          <th>Id</th>
-          <th>Email</th>
-          <th>Status</th>
-          <th>Role</th>
-          <th>Last Login</th>
-          <th>Actions</th>
-        </tr>
+        <thead>
+          <tr className="text-xl text-gray-700">
+            <th>Name</th>
+            <th>Id</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Role</th>
+            <th>Last Login</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
 
         {_data.currentData().map((items) => {
           return (
-            <tr className="text-center">
-              <td className="px-16" key={items._id}>
-                {items.name}
-              </td>
-              <td className="px-4">{items._id}</td>
-              <td className="px-4">{items.email}</td>
-              <td className="px-4">
-                <Badge
-                  //@ts-ignore
-                  type={items.status === 'Active' ? 'primary' : 'secondary'}>
-                  {items.status}
-                </Badge>
-              </td>
-              <td className="px-4">{items.role}</td>
-              <td className="px-4">{items.lastLogin}</td>
-              <td className="px-4 flex justify-center items-center">
-                <span
-                  className="px-2 text-2xl cursor-pointer"
-                  onClick={() => showEditForm(items._id)}>
-                  <EditIcon />
-                </span>
+            <tbody key={items._id}>
+              <tr className="text-center text-gray-600">
+                <td className="px-16">{items.name}</td>
+                <td className="px-4">{items._id}</td>
+                <td className="px-4">{items.email}</td>
+                <td className="px-4">
+                  <Badge
+                    type={items.status === 'Active' ? 'primary' : 'secondary'}>
+                    {items.status}
+                  </Badge>
+                </td>
+                <td className="px-4">{items.role}</td>
+                <td className="px-4">{items.lastLogin}</td>
+                <td className="px-4 flex justify-center items-center">
+                  <span
+                    className="px-2 text-2xl cursor-pointer"
+                    onClick={() => showEditForm(items._id)}>
+                    <EditIcon />
+                  </span>
 
-                <span
-                  className="px-2 text-2xl cursor-pointer"
-                  onClick={() => handleDelete(items._id)}>
-                  <DeleteIcon />
-                </span>
-              </td>
-            </tr>
+                  <span
+                    className="px-2 text-2xl cursor-pointer"
+                    onClick={() => handleDelete(items._id)}>
+                    <DeleteIcon />
+                  </span>
+                </td>
+              </tr>
+            </tbody>
           );
         })}
       </table>

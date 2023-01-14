@@ -7,7 +7,7 @@ import AddUserForm from './add-user-form';
 const TableHero = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   return (
-    <div className="flex justify-between items-start">
+    <div className="flex justify-between items-start mb-4">
       <div>
         <div className="flex items-center">
           <h3 className="pr-2 text-xl">Users</h3>

@@ -25,16 +25,13 @@ const AddUserForm = () => {
       },
     })
       .then((res) => {
-        console.log(res);
         toast.success('User added successfully');
-        // navigate('/');
         setName('');
         setEmail('');
         setRole('');
         setStatus('');
       })
       .catch((err) => {
-        console.log(err);
         toast.error('Something went wrong');
       });
   };
