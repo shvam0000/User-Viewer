@@ -1,15 +1,13 @@
+//@ts-nocheck
 import { useState, useEffect } from 'react';
-import { useTable } from 'react-table';
-import { ArrowIcon } from '../../utils/icons';
-import { columns } from '../../utils/data/table-data';
+import { DeleteIcon, EditIcon } from '../../utils/icons';
 import axios from 'axios';
-
+import { Badge } from '../shared';
 const TableData = () => {
   const [data, setData] = useState<[]>([]);
 
-  const url = 'http://localhost:3001/users';
   useEffect(() => {
-    axios(url, {
+    axios('http://localhost:3001/users', {
       method: 'GET',
     })
       .then((res) => {
@@ -21,52 +19,64 @@ const TableData = () => {
       });
   }, []);
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-    //@ts-ignore
-  } = useTable({ columns, data });
+  const handleDelete = (_id: any) => {
+    alert(_id);
+    axios(`http://localhost:3001/users/${_id}`, {
+      method: 'DELETE',
+    })
+      .then((res) => {
+        console.log(res);
+        alert(res);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert(err);
+      });
+  };
 
   return (
     <div className="bg-white p-4">
-      <table {...getTableProps()} className="table-auto w-full">
-        <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th
-                  {...column.getHeaderProps()}
-                  className="px-4 py-2 items-start text-gray-400">
-                  <div className="flex">
-                    <span>{column.render('Header')}</span>
-                    <span className="text-xl font-bold pl-1">
-                      <ArrowIcon />
-                    </span>
-                  </div>
-                </th>
-              ))}
+      <table>
+        <tr className="text-2xl">
+          <th>Name</th>
+          <th>Id</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Role</th>
+          <th>Last Login</th>
+          <th>Actions</th>
+        </tr>
+
+        {data.map((items) => {
+          return (
+            <tr className="text-center">
+              <td className="px-16" key={items._id}>
+                {items.name}
+              </td>
+              <td className="px-4">{items._id}</td>
+              <td className="px-4">{items.email}</td>
+              <td className="px-4">
+                <Badge
+                  //@ts-ignore
+                  type={items.status === 'Active' ? 'primary' : 'secondary'}>
+                  {items.status}
+                </Badge>
+              </td>
+              <td className="px-4">{items.role}</td>
+              <td className="px-4">{items.lastLogin}</td>
+              <td className="px-4 flex justify-center items-center">
+                <span className="px-2 text-2xl">
+                  <EditIcon />
+                </span>
+                <span
+                  className="px-2 text-2xl cursor-pointer"
+                  onClick={() => handleDelete(items._id)}>
+                  <DeleteIcon />
+                </span>
+              </td>
             </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row, i) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return (
-                    <td {...cell.getCellProps()} className="px-4 py-2">
-                      {cell.render('Cell')}
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
+          );
+        })}
       </table>
     </div>
   );
