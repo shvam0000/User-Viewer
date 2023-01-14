@@ -18,6 +18,7 @@ const TableData = () => {
   const perPage = 5;
   const [data, setData] = useState<[]>([]);
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const [userId, setUserId] = useState<string>('2');
   const [userdata, setUserData] = useState<any>();
 
@@ -51,6 +52,7 @@ const TableData = () => {
     })
       .then((res) => {
         toast.success('User deleted successfully');
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
@@ -82,6 +84,8 @@ const TableData = () => {
       })
         .then((res) => {
           toast.success('User updated successfully');
+          setShowModal(false);
+          window.location.reload();
         })
         .catch((err) => {
           console.log(err);
@@ -198,46 +202,85 @@ const TableData = () => {
       <table>
         <thead>
           <tr className="text-xl text-gray-700">
-            <th>Name</th>
-            <th>Id</th>
-            <th>Email</th>
-            <th>Status</th>
-            <th>Role</th>
-            <th>Last Login</th>
-            <th>Actions</th>
+            <th className="py-4">Name</th>
+            <th className="py-4">Id</th>
+            <th className="py-4">Email</th>
+            <th className="py-4">Status</th>
+            <th className="py-4">Role</th>
+            <th className="py-4">Last Login</th>
+            <th className="py-4">Actions</th>
           </tr>
         </thead>
 
         {_data.currentData().map((items) => {
           return (
-            <tbody key={items._id}>
-              <tr className="text-center text-gray-600">
-                <td className="px-16">{items.name}</td>
-                <td className="px-4">{items._id}</td>
-                <td className="px-4">{items.email}</td>
-                <td className="px-4">
-                  <Badge
-                    type={items.status === 'Active' ? 'primary' : 'secondary'}>
-                    {items.status}
-                  </Badge>
-                </td>
-                <td className="px-4">{items.role}</td>
-                <td className="px-4">{items.lastLogin}</td>
-                <td className="px-4 flex justify-center items-center">
-                  <span
-                    className="px-2 text-2xl cursor-pointer"
-                    onClick={() => showEditForm(items._id)}>
-                    <EditIcon />
-                  </span>
+            <>
+              <tbody key={items._id}>
+                <tr className="text-center text-gray-600">
+                  <td className="px-16 py-2">{items.name}</td>
+                  <td className="px-4 py-2">{items._id}</td>
+                  <td className="px-4 py-2">{items.email}</td>
+                  <td className="px-4 py-2">
+                    <Badge
+                      type={
+                        items.status === 'Active' ? 'primary' : 'secondary'
+                      }>
+                      {items.status}
+                    </Badge>
+                  </td>
+                  <td className="px-4 py-2">{items.role}</td>
+                  <td className="px-4 py-2">{items.lastLogin}</td>
+                  <td className="px-4 py-2 flex justify-center items-center">
+                    <span
+                      className="px-2 text-2xl cursor-pointer"
+                      onClick={() => showEditForm(items._id)}>
+                      <EditIcon />
+                    </span>
 
-                  <span
-                    className="px-2 text-2xl cursor-pointer"
-                    onClick={() => handleDelete(items._id)}>
-                    <DeleteIcon />
-                  </span>
-                </td>
-              </tr>
-            </tbody>
+                    <span
+                      className="px-2 text-2xl cursor-pointer"
+                      onClick={() => setShowDeleteModal(true)}>
+                      <DeleteIcon />
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+              <Modal
+                enterAnimation="fade"
+                exitAnimation="fade"
+                timeout={250}
+                isOpen={showDeleteModal}
+                onClose={() => setShowDeleteModal(false)}
+                titleElement={<h3>Confirm Delete</h3>}
+                children={
+                  <div>
+                    <h1>
+                      Are you sure you want to delete this user? This action
+                      cannot be undone.
+                    </h1>
+                    <div className="flex justify-center items-center">
+                      <span className="px-2">
+                        <Button
+                          type="secondary"
+                          handleClick={() => setShowDeleteModal(false)}>
+                          <h1>No</h1>
+                        </Button>
+                      </span>
+                      <span className="px-2">
+                        <Button
+                          type="primary"
+                          handleClick={() => {
+                            handleDelete(items._id);
+                            setShowDeleteModal(false);
+                          }}>
+                          <h1>Yes</h1>
+                        </Button>
+                      </span>
+                    </div>
+                  </div>
+                }
+              />
+            </>
           );
         })}
       </table>

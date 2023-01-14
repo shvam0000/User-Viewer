@@ -26,10 +26,7 @@ const AddUserForm = () => {
     })
       .then((res) => {
         toast.success('User added successfully');
-        setName('');
-        setEmail('');
-        setRole('');
-        setStatus('');
+        window.location.reload();
       })
       .catch((err) => {
         toast.error('Something went wrong');
