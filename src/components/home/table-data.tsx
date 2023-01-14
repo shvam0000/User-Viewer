@@ -4,6 +4,7 @@ import Modal from 'react-lean-modal';
 import axios from 'axios';
 import { Badge, Button } from '../shared';
 import { DeleteIcon, EditIcon } from '../../utils/icons';
+import { lastLogin } from '../../utils/helper';
 
 const TableData = () => {
   const [data, setData] = useState<[]>([]);
@@ -62,6 +63,8 @@ const TableData = () => {
       e.preventDefault();
       const name = e.target.name.value;
       const email = e.target.email.value;
+      const status = e.target.status.value;
+      const role = e.target.role.value;
       console.log('heheehe', email, name);
 
       axios(`http://localhost:3001/users/${userId}`, {
@@ -69,6 +72,8 @@ const TableData = () => {
         data: {
           name,
           email,
+          status,
+          role,
         },
       })
         .then((res) => {
@@ -117,7 +122,42 @@ const TableData = () => {
               />
             </div>
 
-            {/* <div className="mb-4">
+            <div className="mb-4">
+              <label
+                className="block mb-2 text-sm font-medium text-gray-900 "
+                htmlFor="status">
+                Status
+              </label>
+              <select
+                required
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                id="status"
+                name="status"
+                defaultValue={userdata?.status}>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </div>
+
+            <div className="mb-4">
+              <label
+                className="block mb-2 text-sm font-medium text-gray-900 "
+                htmlFor="role">
+                Role
+              </label>
+              <select
+                required
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                id="role"
+                name="role"
+                defaultValue={userdata?.role}>
+                <option value="Admin">Admin</option>
+                <option value="Sales Leader">Sales Leader</option>
+                <option value="Sales Rep">Sales Rep</option>
+              </select>
+            </div>
+
+            <div className="mb-4">
               <label
                 htmlFor="last-login"
                 className="block mb-2 text-sm font-medium text-gray-900 ">
@@ -126,12 +166,11 @@ const TableData = () => {
               <input
                 disabled
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                id="email"
-                type="email"
-                placeholder="johndoe@gmail.com"
-                value={lastLogin}
+                id="last-login"
+                type="text"
+                defaultValue={lastLogin}
               />
-            </div> */}
+            </div>
             <Button type="secondary">
               <button>Submit</button>
             </Button>
@@ -173,7 +212,7 @@ const TableData = () => {
               <td className="px-4">{items.lastLogin}</td>
               <td className="px-4 flex justify-center items-center">
                 <span
-                  className="px-2 text-2xl"
+                  className="px-2 text-2xl cursor-pointer"
                   onClick={() => showEditForm(items._id)}>
                   <EditIcon />
                 </span>
