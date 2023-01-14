@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ArrowIcon = () => {
+const DownArrowIcon = () => {
   return (
     <svg
       stroke="currentColor"
@@ -15,4 +15,4 @@ const ArrowIcon = () => {
   );
 };
 
-export default ArrowIcon;
+export default DownArrowIcon;
