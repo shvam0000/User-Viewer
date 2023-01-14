@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { lastLogin } from '../../utils/helper';
 import { Button } from '../shared';
 
@@ -24,7 +26,8 @@ const AddUserForm = () => {
     })
       .then((res) => {
         console.log(res);
-        alert('submitted');
+        toast.success('User added successfully');
+        // navigate('/');
         setName('');
         setEmail('');
         setRole('');
@@ -32,7 +35,7 @@ const AddUserForm = () => {
       })
       .catch((err) => {
         console.log(err);
-        alert(err);
+        toast.error('Something went wrong');
       });
   };
 
@@ -46,6 +49,7 @@ const AddUserForm = () => {
             Name
           </label>
           <input
+            required
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             id="username"
             type="text"
@@ -62,6 +66,7 @@ const AddUserForm = () => {
             Email
           </label>
           <input
+            required
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             id="email"
             type="email"
@@ -78,6 +83,7 @@ const AddUserForm = () => {
             Role
           </label>
           <select
+            required
             onChange={(e) => setRole(e.target.value)}
             id="roles"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
@@ -97,6 +103,7 @@ const AddUserForm = () => {
             Status
           </label>
           <select
+            required
             onChange={(e) => setStatus(e.target.value)}
             id="status"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
@@ -115,6 +122,7 @@ const AddUserForm = () => {
             Last Login
           </label>
           <input
+            required
             disabled
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             id="last-login"
@@ -127,6 +135,7 @@ const AddUserForm = () => {
           <button>Submit</button>
         </Button>
       </form>
+      <ToastContainer />
     </div>
   );
 };

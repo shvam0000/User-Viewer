@@ -11,6 +11,8 @@ import {
 } from '../../utils/icons';
 import { lastLogin } from '../../utils/helper';
 import { usePagination } from '../../utils/hooks/';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const TableData = () => {
   const perPage = 5;
@@ -46,17 +48,16 @@ const TableData = () => {
   }, [userId]);
 
   const handleDelete = (_id: any) => {
-    alert(_id);
     axios(`http://localhost:3001/users/${_id}`, {
       method: 'DELETE',
     })
       .then((res) => {
         console.log(res);
-        alert(res);
+        toast.success('User deleted successfully');
       })
       .catch((err) => {
         console.log(err);
-        alert(err);
+        toast.error('Something went wrong');
       });
   };
 
@@ -85,11 +86,11 @@ const TableData = () => {
       })
         .then((res) => {
           console.log(res);
-          alert(res);
+          toast.success('User updated successfully');
         })
         .catch((err) => {
           console.log(err);
-          alert(err);
+          toast.error('Something went wrong');
         });
     };
 
@@ -278,6 +279,7 @@ const TableData = () => {
         titleElement={<h3>Update User</h3>}
         children={<EditUserForm />}
       />
+      <ToastContainer />
     </div>
   );
 };
