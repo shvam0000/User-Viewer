@@ -2,6 +2,16 @@
 
 A web based dashboard to view, update, delete annd update list of users and maintain the database.
 
+## 📺 Preview
+
+<img src="https://github.com/shvam0000/User-Viewer/blob/main/asset/images/1.png" alt="User Dashboard" height="500" width="1000">
+
+<img src="https://github.com/shvam0000/User-Viewer/blob/main/asset/images/2.png" alt="User Dashboard" height="500" width="1000">
+
+<img src="https://github.com/shvam0000/User-Viewer/blob/main/asset/images/3.png" alt="User Dashboard" height="500" width="1000">
+
+<img src="https://github.com/shvam0000/User-Viewer/blob/main/asset/images/4.png" alt="User Dashboard" height="500" width="1000">
+
 ## 📌 Prerequisites
 
 ### 💻 System requirement :
