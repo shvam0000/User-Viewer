@@ -5,7 +5,7 @@
   "author": "Shivam",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "restart": "lite-server",
     "lite-server": "run-lite-server"
   },
