@@ -1,10 +1,26 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import Modal from 'react-lean-modal';
+import csvDownload from 'json-to-csv-export';
 import { DownloadIcon, PlusIcon } from '../../utils/icons';
 import { Badge, Button } from '../shared';
 import AddUserForm from './add-user-form';
 
 const TableHero = () => {
+  const [data, setData] = useState<any>([]);
+
+  useEffect(() => {
+    axios('http://localhost:3001/users', {
+      method: 'GET',
+    })
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   const [showModal, setShowModal] = useState<boolean>(false);
   return (
     <div className="flex justify-between items-start mb-4">
@@ -28,7 +44,13 @@ const TableHero = () => {
               <span className="px-1 text-xl">
                 <DownloadIcon />
               </span>
-              <span className="px-1">Download CSV</span>
+              <span
+                className="px-1"
+                onClick={() => {
+                  csvDownload({ data: data });
+                }}>
+                Download CSV
+              </span>
             </div>
           </Button>
         </div>
